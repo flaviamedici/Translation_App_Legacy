@@ -94,6 +94,33 @@ namespace TranslationApp.API.Controllers
             };
             return BadRequest("Could Not add the photo");
         }
-        
+        [HttpPost("{id}/setMain")]
+        public async Task<IActionResult> SetMainPhoto(int userId, int id)
+        {
+             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            return Unauthorized(); 
+            
+            // get user from repo
+            var user = await _repo.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+                return Unauthorized();
+
+            var photoFromRepo = await _repo.GetPhoto(id);
+
+            if (photoFromRepo.IsMain)
+                return BadRequest("This is already the main photo");
+
+            // Get current main photo from repo
+            var currentMainPhoto = await _repo.GetMainPhotoForUser(userId);
+            currentMainPhoto.IsMain = false;
+
+            photoFromRepo.IsMain = true;
+
+            if (await _repo.SaveAll())
+                return NoContent();
+
+            return BadRequest("Could Not set photo to Main");
+        }
     }
 }
