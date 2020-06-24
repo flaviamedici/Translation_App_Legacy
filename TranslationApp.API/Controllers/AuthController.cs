@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using AutoMapper;
 
 namespace TranslationApp.API.Controllers
 {
@@ -19,8 +20,10 @@ namespace TranslationApp.API.Controllers
     {
         private readonly IConfiguration _config;
         private readonly IAuthRepository _repo;
-        public AuthController(IAuthRepository repo, IConfiguration config)
+        private readonly IMapper _mapper;
+        public AuthController(IAuthRepository repo, IConfiguration config, IMapper mapper)
         {
+            _mapper = mapper;
             _config = config;
             _repo = repo;
         }
@@ -32,7 +35,7 @@ namespace TranslationApp.API.Controllers
             userForRegisterDto.Username = userForRegisterDto.Username.ToLower();
 
             //check if user exixts
-            if(await _repo.UserExists(userForRegisterDto.Username))
+            if (await _repo.UserExists(userForRegisterDto.Username))
                 return BadRequest("Username already exists");
 
             var userToCreate = new User
@@ -48,12 +51,12 @@ namespace TranslationApp.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            
+
 
             var userFromRepo = await _repo.Login(userForLoginDto.Username.ToLower(), userForLoginDto.Password);
 
-            if(userFromRepo == null)
-            return Unauthorized();
+            if (userFromRepo == null)
+                return Unauthorized();
 
 
             var claims = new[]
@@ -77,13 +80,15 @@ namespace TranslationApp.API.Controllers
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
 
-            return Ok(new 
+            var user = _mapper.Map<UserForListDto>(userFromRepo);
+
+            return Ok(new
             {
                 token = tokenHandler.WriteToken(token)
             });
-           
-            
-            
-        } 
+
+
+
+        }
     }
 }
