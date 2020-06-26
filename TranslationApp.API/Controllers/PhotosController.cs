@@ -122,5 +122,50 @@ namespace TranslationApp.API.Controllers
 
             return BadRequest("Could Not set photo to Main");
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePhoto(int userId, int id)
+        {
+             if (userId != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            return Unauthorized(); 
+            
+            // get user from repo
+            var user = await _repo.GetUser(userId);
+
+            if(!user.Photos.Any(p => p.Id == id))
+                return Unauthorized();
+
+            var photoFromRepo = await _repo.GetPhoto(id);
+
+            //check if the picture the user is trying to delete is the main picture
+            if (photoFromRepo.IsMain)
+            return BadRequest("Unable to delete main picture");
+
+            if (photoFromRepo.PublicId != null)
+            {
+                
+                //from CLoudinary documentation to delete an image
+                var deleteParams = new DeletionParams(photoFromRepo.PublicId);
+
+                var result = _cloudinary.Destroy(deleteParams);
+
+                if(result.Result == "ok")
+                {
+                    _repo.Delete(photoFromRepo);
+                }
+            }
+
+            if (photoFromRepo.PublicId == null)
+            {
+                _repo.Delete(photoFromRepo);
+            }
+
+            if (await _repo.SaveAll())
+                return Ok();
+
+            return BadRequest("Failed to delete photo");
+        }
+
+        
     }
 }
