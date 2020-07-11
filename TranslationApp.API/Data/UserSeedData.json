@@ -1,7 +1,7 @@
 [
   {
     "Username": "Lola",
-    "Gender": "female",
+    "Profession": "Translator",
     "DateOfBirth": "1994-02-21",
     "Password": "password",
     "KnownAs": "Lola",
@@ -22,7 +22,7 @@
   },
   {
     "Username": "Dorothy",
-    "Gender": "female",
+    "Profession": "Translator",
     "DateOfBirth": "1979-04-19",
     "Password": "password",
     "KnownAs": "Dorothy",
@@ -43,7 +43,7 @@
   },
   {
     "Username": "Reba",
-    "Gender": "female",
+    "Profession": "Translator",
     "DateOfBirth": "1984-12-05",
     "Password": "password",
     "KnownAs": "Reba",
@@ -64,7 +64,7 @@
   },
   {
     "Username": "Annmarie",
-    "Gender": "female",
+    "Profession": "Translator",
     "DateOfBirth": "1970-02-25",
     "Password": "password",
     "KnownAs": "Annmarie",
@@ -85,7 +85,7 @@
   },
   {
     "Username": "Ashley",
-    "Gender": "female",
+    "Profession": "Translator",
     "DateOfBirth": "1953-03-01",
     "Password": "password",
     "KnownAs": "Ashley",
@@ -106,7 +106,7 @@
   },
   {
     "Username": "Roy",
-    "Gender": "male",
+    "Profession": "hire",
     "DateOfBirth": "1993-08-21",
     "Password": "password",
     "KnownAs": "Roy",
@@ -127,7 +127,7 @@
   },
   {
     "Username": "Duke",
-    "Gender": "male",
+    "Profession": "hire",
     "DateOfBirth": "1996-09-07",
     "Password": "password",
     "KnownAs": "Duke",
@@ -148,7 +148,7 @@
   },
   {
     "Username": "Lloyd",
-    "Gender": "male",
+    "Profession": "hire",
     "DateOfBirth": "1957-03-07",
     "Password": "password",
     "KnownAs": "Lloyd",
@@ -169,7 +169,7 @@
   },
   {
     "Username": "Larsen",
-    "Gender": "male",
+    "Profession": "hire",
     "DateOfBirth": "1969-08-15",
     "Password": "password",
     "KnownAs": "Larsen",
@@ -190,7 +190,7 @@
   },
   {
     "Username": "Simon",
-    "Gender": "male",
+    "Profession": "hire",
     "DateOfBirth": "1984-02-19",
     "Password": "password",
     "KnownAs": "Simon",
