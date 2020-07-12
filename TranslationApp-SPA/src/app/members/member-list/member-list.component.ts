@@ -28,6 +28,7 @@ export class MemberListComponent implements OnInit {
     this.userParams.profession = this.user.profession === 'translator' ? 'hire' : 'translator';
     this.userParams.minAge = 18;
     this.userParams.maxAge = 99;
+    this.userParams.orderBy = 'LastActive';
   }
 
 
