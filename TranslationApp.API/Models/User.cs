@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TranslationApp.API.Models;
 
 namespace TranslationApp.API.Data
 {
@@ -21,5 +22,7 @@ namespace TranslationApp.API.Data
         public string City { get; set; }
         public string Country { get; set; }
         public ICollection<Photo> Photos { get; set; }
+        public ICollection<Like> Likers { get; set; }
+        public ICollection<Like> Likees { get; set; }
     }
 }

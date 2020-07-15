@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TranslationApp.API.Helpers;
+using TranslationApp.API.Models;
 
 namespace TranslationApp.API.Data
 {
@@ -14,5 +15,6 @@ namespace TranslationApp.API.Data
          Task<Photo> GetPhoto(int id);
 
          Task<Photo> GetMainPhotoForUser(int userId);
+         Task<Like> GetLike(int userId, int recipientId);
     }
 }

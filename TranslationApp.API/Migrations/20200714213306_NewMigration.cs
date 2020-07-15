@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TranslationApp.API.Migrations
 {
-    public partial class ExtendedUserClass : Migration
+    public partial class NewMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -35,11 +35,6 @@ namespace TranslationApp.API.Migrations
                 nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "Gender",
-                table: "Users",
-                nullable: true);
-
-            migrationBuilder.AddColumn<string>(
                 name: "Introduction",
                 table: "Users",
                 nullable: true);
@@ -59,6 +54,35 @@ namespace TranslationApp.API.Migrations
                 table: "Users",
                 nullable: false,
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+
+            migrationBuilder.AddColumn<string>(
+                name: "Profession",
+                table: "Users",
+                nullable: true);
+
+            migrationBuilder.CreateTable(
+                name: "Likes",
+                columns: table => new
+                {
+                    LikerId = table.Column<int>(nullable: false),
+                    LikeeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Likes", x => new { x.LikerId, x.LikeeId });
+                    table.ForeignKey(
+                        name: "FK_Likes_Users_LikeeId",
+                        column: x => x.LikeeId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Likes_Users_LikerId",
+                        column: x => x.LikerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Photos",
@@ -85,6 +109,11 @@ namespace TranslationApp.API.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Likes_LikeeId",
+                table: "Likes",
+                column: "LikeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Photos_UserId",
                 table: "Photos",
                 column: "UserId");
@@ -92,6 +121,9 @@ namespace TranslationApp.API.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Likes");
+
             migrationBuilder.DropTable(
                 name: "Photos");
 
@@ -116,10 +148,6 @@ namespace TranslationApp.API.Migrations
                 table: "Users");
 
             migrationBuilder.DropColumn(
-                name: "Gender",
-                table: "Users");
-
-            migrationBuilder.DropColumn(
                 name: "Introduction",
                 table: "Users");
 
@@ -133,6 +161,10 @@ namespace TranslationApp.API.Migrations
 
             migrationBuilder.DropColumn(
                 name: "LastActive",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "Profession",
                 table: "Users");
         }
     }
