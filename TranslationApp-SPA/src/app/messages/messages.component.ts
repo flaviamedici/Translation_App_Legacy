@@ -5,6 +5,7 @@ import { UserService } from '../_services/user.service';
 import { AuthService } from '../_services/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertifyService } from '../_services/alertify.service';
+import { threadId } from 'worker_threads';
 
 @Component({
   selector: 'app-messages',
@@ -35,6 +36,17 @@ export class MessagesComponent implements OnInit {
       }, error => {
         this.alertify.error(error);
       });
+  }
+
+  deleteMessage(id: number) {
+    this.alertify.confirm('Are you sure you want to delete this message?', () => {
+      this.userService.deleteMessage(id, this.authService.decodedToken.nameId).subscribe(() => {
+        this.messages.splice(this.messages.findIndex(m => m.id === id), 1);
+        this.alertify.success('Message hes been deleted');
+      }, error => {
+        this.alertify.error('Failed to delete message');
+      });
+    });
   }
 
   pageChanged(event: any): void {
